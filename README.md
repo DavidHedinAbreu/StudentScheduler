@@ -15,8 +15,21 @@ The app attempts to find an ideal schedule for the students, based on these crit
 * Students who should receive intervention with a casemanager because of special needs (SPED, ELL, RSP) are placed with that teacher instead of with the general population.
 The ideal schedule is saved to database and exported as CSV.
 
-Comments: I'm looking forward to refactoring the code from a set of interfaces.  The project suffered from several uncommunicated but essential criteria for scheduling, which had to be added later.  Therefore I suspect the object-oriented design isn't as sleek as it might have been.  Also, I wasn't too familiar with streams/lambda expressions/functional programming when I wrote the app, and now that I'm more aware of the believe a functional approach might be used here and there to make the code more concise.  With the interface approach I hope development can be more test-driven and ultimately more flexible.
+FOR FURTHER DEVELOPMENT:
 
-To-do: A GUI needs to allow the admin to make ad-hoc changes to the completed schedule, for example, when a teacher has a special request to have a particular student in his/her intervention classroom, or when two students should not be placed together in the same room.  Next steps: to create a web-app attendance-taking component.  It might be modified to allow admin to alter the schedule.  The GUI might even allow teachers to "trade" students during intervention when they mutually decide it would be beneficial for the student, for example, when Johnny needs to finish his English paper to pass English, although he has Algebra intervention.
+1. Review the suitability of the "student" object, with fields representing intervention-eligible courses prioritized by likelihood of pass and need for graduation, and caseworker. Does the "student" object represent everything that can be used for scheduling? Are there more sensible ways to translate raw data into an array of student objects?
+2. Do the same for the "classroom" object, with fields representing subjects taught, capacity, availability for intervention, and caseworker status.
+3. Consider making static those statistics calculated from the entire population that may be improved by multiple iterations of microservices, like classroom overcrowding/balancing which may be improved by changing intervention course, and appropriateness of intervention course which may be improved by allowing overcrowding/imbalance.  Also consider making static the array of student objects and intervention classroom objects.
+4. Look for ways to use linear algebra optimization methods (simplex method?) to find optimal composition and size of intervention classes for each teacher.
+5. Use a functional-programming approach -- streams, collections, and lambda expressions -- when feasible.
+6. Rewrite the optimization strategy as services that are as stateless as possible.  For example,
+    Raw student data -> student object array
+    Raw teacher data -> classroom object array
+    SOA + COA -> balance (minimal overcrowding) statistics
+    SOA + COA -> appropriate placement statistics
+    SOA + COA + OS + APS -> COA optimized for BS, SOA optimized for APS
+7. A GUI allow ad-hoc changes to the finalized schedule, for example to honor teacher's parent's or student's special request for placement.
+8. An attendance service to verify presence/absence, and to allow ad-hoc changes in attendance roster initiated and confirmed in advance by teachers (for example to honor teachers' agreement to swap a student for one or more periods, so Johnny can finish his English exam during intervention assigned as math.)
 
-Do you have any comments?
+Next steps: can the process of creation of a master schedule be automated via AI?
+
