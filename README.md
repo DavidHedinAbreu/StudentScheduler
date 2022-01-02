@@ -1,6 +1,9 @@
 # StudentScheduler
 Java app for scheduling students with Ds and Fs into "intervention periods" for the class they're struggling in.
-Last updated October 26, 2019.  
+Last updated October 26, 2019.
+
+FUNCTION: 
+
 Receives as input a CSV file containing records for 2700 students, with the following fields:
 studentno	lastname	middlename	firstname	grade	room	period	courseno	coursetitle	percent	mark	gpa	credits1	credits2	id
 Also receives CSV with teachers available for intervention (i.e., not assigned other duties).
@@ -22,13 +25,15 @@ FOR FURTHER DEVELOPMENT:
 3. Consider making static those statistics calculated from the entire population that may be improved by multiple iterations of microservices, like classroom overcrowding/balancing which may be improved by changing intervention course, and appropriateness of intervention course which may be improved by allowing overcrowding/imbalance.  Also consider making static the array of student objects and intervention classroom objects.
 4. Look for ways to use linear algebra optimization methods (simplex method?) to find optimal composition and size of intervention classes for each teacher.
 5. Use a functional-programming approach -- streams, collections, and lambda expressions -- when feasible.
-6. Rewrite the optimization strategy as services that are as stateless as possible.  For example,
-    Raw student data -> student object array
-    Raw teacher data -> classroom object array
+6. A GUI so admin can choose and save parameters: a list of courses and grade levels that make the course a graduation priority, should ELL RSP and SPED students be placed with caseworker?
+7. Rewrite the optimization strategy as services that are as stateless as possible.  For example,
+    Raw student data + errata mapping* -> student object array or errata notifications (typos, etc)
+    Raw student data + errata mapping* -> classroom object array or errata notifications (typos, etc)
+    User creates mapping* to correct errors (such as teacher with multiple room numbers, student with multiple names, room with multiple teachers assigned, teacher was replaced, etc.) Repeat first two steps.
     SOA + COA -> balance (minimal overcrowding) statistics
     SOA + COA -> appropriate placement statistics
     SOA + COA + OS + APS -> COA optimized for BS, SOA optimized for APS
-7. A GUI allow ad-hoc changes to the finalized schedule, for example to honor teacher's parent's or student's special request for placement.
+7. A GUI allow admin to allow ad-hoc changes to the finalized schedule, for example to honor teacher's parent's or student's special request for placement.
 8. An attendance service to verify presence/absence, and to allow ad-hoc changes in attendance roster initiated and confirmed in advance by teachers (for example to honor teachers' agreement to swap a student for one or more periods, so Johnny can finish his English exam during intervention assigned as math.)
 
 Next steps: can the process of creation of a master schedule be automated via AI?
